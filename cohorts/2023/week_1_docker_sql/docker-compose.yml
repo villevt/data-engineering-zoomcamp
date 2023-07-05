@@ -1,15 +1,26 @@
 version: '3.8'
 
 services:
-  pgadmin:
-    image: dpage/pgadmin4:7.4
+  db:
     environment:
-      - PGADMIN_DEFAULT_EMAIL=ville.turku99@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD=password
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    image: postgres:15.3
+    restart: unless-stopped
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    image: dpage/pgadmin4:7.4
     ports:
       - "5050:80"
+    restart: unless-stopped
     volumes:
       - pgadmin:/var/lib/pgadmin
 
+
 volumes:
   pgadmin:
+  pgdata:
