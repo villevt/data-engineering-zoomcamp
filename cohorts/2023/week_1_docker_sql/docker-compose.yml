@@ -1,9 +1,19 @@
 version: '3.8'
 
 services:
+  dataload:
+    build: 
+      dockerfile: Dockerfile.dataload
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+    volumes:
+      - dataload:/usr/src/app/dataload-refresh
+
   db:
     environment:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
     image: postgres:15.3
     restart: unless-stopped
     volumes:
@@ -22,5 +32,6 @@ services:
 
 
 volumes:
+  dataload:
   pgadmin:
   pgdata:
