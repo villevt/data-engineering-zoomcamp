@@ -7,14 +7,9 @@ provider "google" {
   ]
 }
 
-data "google_secret_manager_secret_version" "terraform_service_account_email" {
-  provider = google.impersonation
-  secret   = "terraform_service_account_email"
-}
-
 data "google_service_account_access_token" "default" {
   provider               = google.impersonation
-  target_service_account = data.google_secret_manager_secret_version.terraform_service_account_email.secret_data
+  target_service_account = "zoomcamp-terraform@zoomcamp-392000.iam.gserviceaccount.com"
   scopes                 = ["userinfo-email", "cloud-platform"]
   lifetime               = "1200s"
 }
