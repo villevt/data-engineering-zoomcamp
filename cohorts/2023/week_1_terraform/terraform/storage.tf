@@ -28,7 +28,7 @@ resource "google_storage_bucket" "data_lake" {
 }
 
 resource "google_bigquery_dataset" "data-warehouse" {
-    dataset_id = "trips_data"
+    dataset_id = "trips"
     location = local.data_region
     description = "Trips data warehouse"
     delete_contents_on_destroy = true
